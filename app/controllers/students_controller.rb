@@ -1,6 +1,15 @@
 class StudentsController < ApplicationController
+  
+  def index
+    @students = Student.search(params[:search])
+  end
+  
   def new
     @student = Student.new
+  end
+  
+  def show
+    @student = Student.find(params[:id])
   end
 
   def create
@@ -15,16 +24,20 @@ class StudentsController < ApplicationController
   def edit
     @student = Student.find(params[:id])
   end
-
-  def show
-    @student = Student.find(params[:id])
+  
+  def update 
+    @student = Student.update(student_params)
+    if @student.save 
+      redirect_to @student 
+    else 
+      render "edit"
+    end 
   end
 
-  def index
-    @students = Student.all
-  end
 
+  private 
+  
   def student_params
-    params.require(:student).permit(:name, :birthday, :hometown)
+    params.require(:student).permit(:student, :name, :birthday, :hometown, :search)
   end
 end

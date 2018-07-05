@@ -1,1 +1,5 @@
-<%= render 'form' %>
+<%= form_for @student do |f| %>
+
+<%= render "form", student: @student %>
+
+<% end %>
